@@ -12,7 +12,7 @@ def simulate(Instr, Hex_Instr):
     Memory = [0 for i in range(mem_space)]
     
     finished = False
-    Cycle = 1
+    Cycle = 0
     threeCycles = 0
     fourCycles = 0
     fiveCycles = 0
@@ -24,6 +24,8 @@ def simulate(Instr, Hex_Instr):
         if(line[0:32] == '00010000000000001111111111111111'):
             print("PC = " + str(PC*4) + " Instruction: 0x" +  Hex_Instr[PC])
             print("Deadloop. Ending program")
+            Cycle += 3
+            threeCycles += 1
             finished = True
             
         elif(line[0:6] == '000000' and line[26:32] == '100000'): # ADD
@@ -150,7 +152,10 @@ def simulate(Instr, Hex_Instr):
     print("******** Simulation finished *********\n")
     print("Dynamic Instr Count: ",DIC)
     print("Registers $0-$7: ",Reg)
-    
+    print("Total # of Cycles: %s. Break down:" % Cycle)
+    print("                    " + str(threeCycles) + " instructions take 3 cycles" )
+    print("                    " + str(fourCycles) + " instructions take 4 cycles" )
+    print("                    " + str(fiveCycles) + " instructions take 5 cycles" )
 
 
 
